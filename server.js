@@ -12,7 +12,8 @@ io.on('connection', function (socket) {
 	socket.on('message', function (message){
 		console.log('message sent is' + message.text);
 		//io.emit to send message even to the sender
-		socket.broadcast.emit('message',message);
+		//socket.broadcast.emit('message',message);
+		io.emit('message',message);
 	});
 
 	socket.emit('message', {
