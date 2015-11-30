@@ -6,8 +6,18 @@ var io = require('socket.io')(http);
 
 app.use(express.static(__dirname + '/public'));
 
-io.on('connection', function () {
+io.on('connection', function (socket) {
 	console.log('connected');
+
+	socket.on('message', function (message){
+		console.log('message sent is' + message.text);
+		//io.emit to send message even to the sender
+		socket.broadcast.emit('message',message);
+	});
+
+	socket.emit('message', {
+		text: 'Welcome to fun'
+	});
 });
 
 http.listen(PORT, function (){
